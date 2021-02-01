@@ -36,6 +36,34 @@ namespace VeterinarySystems
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+            ///Enable CORS
+            ///
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
+            services.AddCors(c =>
+            {
+            c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );
+            });
+
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:5001"));
+            });
+
+
+            //line-1
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
+                new DefaultContractResolver());
+
+
             services.AddDbContext<UserContext>(opt => opt.UseMySQL
             (Configuration.GetConnectionString("DatabaseConnection")                
                 ));
@@ -76,6 +104,14 @@ namespace VeterinarySystems
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.UseCors(options => options.WithOrigins("https://localhost:5001"));
+
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -36,7 +36,7 @@ namespace VeterinarySystems.Controllers
         }
 
 
-        /*
+        /* 
                 [HttpGet("{search}")]
                 public async Task<IActionResult>Search(string specialization)
                     {

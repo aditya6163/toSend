@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,9 @@ using VeterinarySystems.Model;
 
 namespace VeterinarySystems.Controllers
 {
+   
     [Route("api/users")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
     public class UsersController : ControllerBase
     {
